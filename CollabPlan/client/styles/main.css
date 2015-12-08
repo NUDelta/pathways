@@ -1,0 +1,3 @@
+form[dnd-list], form[dnd-list] > md-card { 
+    position: relative;
+}

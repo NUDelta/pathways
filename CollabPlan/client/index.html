@@ -1,0 +1,17 @@
+<head>
+  <base href="/">
+</head>
+<body layout="row">
+  <div ng-app="CollabPlan" layout="column" ng-strict-di flex>
+    <div>
+      <blaze-template name="loginButtons"></blaze-template>
+    </div>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <a href="/requests">Collab Plan</a>
+      </div>
+    </md-toolbar>
+    <md-content ui-view layout="column" layout-padding flex>
+    </md-content>
+  </div>
+</body>

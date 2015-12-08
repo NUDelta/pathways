@@ -1,0 +1,19 @@
+<form ng-submit="addRequest()">
+  <md-input-container flex="">
+    <label>Title</label>
+    <input ng-model="newRequest.title" required>
+  </md-input-container>
+  <md-input-container>
+    <label>Description</label>
+    <textarea ng-model="newRequest.description" required></textarea>
+  </md-input-container>
+</form>
+
+<md-list>
+  <md-list-item class="md-3-line md-long-text md-whiteframe-1dp" ng-repeat="request in requests" ng-click="goToRequest(request)">
+    <div class="md-list-item-text">
+      <h3>{{request.title}}</h3>
+      <p>{{request.description}}</p>
+    </div>
+  </md-list-item>  
+</md-list>

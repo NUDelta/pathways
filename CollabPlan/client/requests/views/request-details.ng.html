@@ -1,0 +1,84 @@
+<div layout="row" flex>
+  <div flex="75" layout-padding>
+    <md-toolbar class="md-theme-indigo">
+      <h2 class="md-toolbar-tools">Action Plan</h2>
+    </md-toolbar>
+    <md-content md-theme="docs-dark" layout-padding layout="column">
+      <md-input-container>
+        <label>Title</label>
+        <textarea ng-model="request.title"></textarea>
+      </md-input-container>
+      <md-input-container>
+        <label>Description</label>
+        <textarea ng-model="request.description"></textarea>
+      </md-input-container>
+    </md-content>
+    <md-content layout-padding>
+      <h3>Milestones</h3>
+      <form name="actionPlan"
+      dnd-list="request.milestones"
+      dnd-allowed-types="['milestone']">
+        <md-card ng-repeat="milestone in request.milestones"
+        ng-init="expand = false"
+        dnd-draggable="milestone"
+        dnd-effect-allowed="move"
+        dnd-moved="request.milestones.splice($index, 1);"
+        dnd-type="milestone.type">
+          <md-card-content>
+            <md-input-container>
+              <label>Milestone Description</label>
+              <textarea ng-model="milestone.description"></textarea>
+            </md-input-container>
+
+            <md-button md-no-ink class="md-primary" ng-click="expand = !expand"><h4>Tasks</h4></md-button>
+            
+            <md-content ng-show="expand"
+            dnd-list="milestone.tasks"
+            dnd-allowed-types="['task']">
+              <md-content layout="row"
+              ng-repeat="task in milestone.tasks"
+              dnd-draggable="task"
+              dnd-effect-allowed="move"
+              dnd-moved="milestone.tasks.splice($index, 1)"
+              dnd-type="task.type">
+                <md-input-container flex="75">
+                  <label>Task</label>
+                  <textarea ng-model="task.description"></textarea>
+                </md-input-container>
+                <md-input-container flex="25">
+                  <label>Reference URL</label>
+                  <textarea ng-model="task.url"></textarea>
+                </md-input-container>
+              </md-content>
+              <md-button md-no-ink class="md-primary" ng-click="addTask(milestone)">New Task</md-button>
+
+            </md-content>
+
+          </md-card-content>
+        </md-card>
+        <md-button md-no-ink class="md-primary" ng-click="addNewMilestone()">New milestone</md-button>
+        <md-button md-no-ink class="md-primary" ng-click="save()">Save</md-button>
+      </form>
+    </md-content>
+  </div>
+  <div flex="25" layout-padding>
+    <md-toolbar class="md-theme-indigo">
+      <h2 class="md-toolbar-tools">Suggestions</h2>
+    </md-toolbar>
+    <md-list dnd-list="request.suggestions"
+    dnd-allowed-types="['milestone', 'task']">
+      <div id="searchcontrol">Loading</div>
+      <md-list-item class="md-long-text"
+      ng-repeat="suggestion in request.suggestions"
+      dnd-draggable="suggestion"
+      dnd-type="suggestion.type"
+      dnd-moved="request.suggestions.splice($index, 1)">
+        <div class="md-list-item-text" layout="column">
+          <p ng-if="suggestion.type == 'milestone'">Milestone: {{suggestion.description}}</p>
+          <p ng-if="suggestion.type == 'task'">Task: {{suggestion.description}}</p>
+        </div>
+      </md-list-item>
+
+    </md-list>
+  </div>
+</div>
